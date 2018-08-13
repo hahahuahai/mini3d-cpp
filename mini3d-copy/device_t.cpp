@@ -151,6 +151,7 @@ unsigned int device_t::device_texture_read(float u, float v)
 {
 	int x, y;
 	u = u*max_u;
+	v = v*max_v;
 	x = (int)(u + 0.5f);//纹理采样采用最邻近法，以后可以考虑用线性插值来优化 
 	y = (int)(v + 0.5f);
 	x = mini3dmath::CMID(x, 0, tex_width - 1);//保证纹理坐标都在范围内
@@ -164,10 +165,11 @@ void device_t::device_draw_scanline(scanline_t& scanline)
 	float *_zbuffer = zbuffer[scanline.y_vertex_start];
 	int x = scanline.x_vertex_start;//绘制的起点x
 	int width_scanline = scanline.width_scanline;//绘制宽度
+	int _width_window = width_window;//设备宽度
 	int renderstate = render_state;//绘制模式
 	for (; width_scanline > 0; x++, width_scanline--)
 	{
-		if (x >= 0 && x < width_scanline)//判断x是否在屏幕内
+		if (x >= 0 && x < _width_window)//判断x是否在屏幕内
 		{
 			float w_reciprocal = scanline.vertex_start.w_reciprocal;
 			if (w_reciprocal >= _zbuffer[x])//这里不用z判断的原因：用z的话，没法表示无限远，设个很大的数？该设多少？rhw是z的倒数，初始化成rhw=0即无限远？任何比0大的都离摄像头更近。zbuffer里面初始值为0.
@@ -194,13 +196,13 @@ void device_t::device_draw_scanline(scanline_t& scanline)
 				if (render_state & RENDER_STATE_TEXTURE)//纹理图
 				{
 					float u = scanline.vertex_start.texturecoordinate.u *w;//因为之前纹理坐标uv除以过w（为了插值），现在乘以w，是还原本来的值。
-					float v = scanline.vertex_start.texturecoordinate.u*w;
+					float v = scanline.vertex_start.texturecoordinate.v*w;
 					unsigned int cc = device_texture_read(u, v);
 					_framebuffer[x] = cc;//纹理值赋给帧缓存framebuffer
 				}
 			}
 			scanline.vertex_start += scanline.step;//加上步长step，指向下一个扫描点
-			if (x >= width_scanline) break;
+			if (x >= _width_window) break;
 		}
 
 	}

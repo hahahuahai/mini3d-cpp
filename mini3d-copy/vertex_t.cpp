@@ -30,6 +30,7 @@ void vertex_t::vertex_w_reciprocal_init()
 
 void vertex_t::vertex_interp(const vertex_t& x1, const vertex_t& x2, float t)
 {
+	position.vector_interp(x1.position, x2.position, t);
 	texturecoordinate.u = mini3dmath::interp(x1.texturecoordinate.u, x2.texturecoordinate.u, t);//此时的UV坐标都是经过透视校正（除以w）之后的坐标，因此是线性的，插值结果正确
 	texturecoordinate.v = mini3dmath::interp(x1.texturecoordinate.v, x2.texturecoordinate.v, t);
 	color.r = mini3dmath::interp(x1.color.r, x2.color.r, t);//同上，线性的
