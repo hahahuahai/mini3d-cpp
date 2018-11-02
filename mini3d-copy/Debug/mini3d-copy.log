@@ -1,3 +1,0 @@
-﻿  device_t.cpp
-c:\users\huahai\documents\github\mini3d-cpp\mini3d-copy\mini3dmath.h(27): warning C4091: “static ”: 没有声明变量时忽略“mini3dmath”的左侧
-  mini3d-copy.vcxproj -> C:\Users\huahai\Documents\GitHub\mini3d-cpp\Debug\mini3d-copy.exe
