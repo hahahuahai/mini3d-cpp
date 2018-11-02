@@ -1,5 +1,5 @@
 # 软件说明
-本文基于[mini3d](https://github.com/skywind3000/mini3d)改编，原程序是用C语言实现，力求精简。本程序用C++语言实现，引入了面向对象的思想。实现的效果和原程序一模一样。
+本程序基于[mini3d](https://github.com/skywind3000/mini3d)改编，原程序是用C语言实现，力求精简。本程序用C++语言实现，引入了面向对象的思想。实现的效果和原程序一模一样。
 
 # 软件效果图
 ![软件效果图](https://github.com/hahahuahai/mini3d-cpp/blob/master/media/%E6%95%88%E6%9E%9C%E5%9B%BE.jpg)
